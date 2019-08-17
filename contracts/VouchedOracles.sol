@@ -1,4 +1,4 @@
-pragma solidity >= 0.5.0 < 0.6.0;
+pragma solidity >= 0.5.5 < 0.6.0;
 import "./Oracle.sol";
 
 contract VouchedOracles {
@@ -8,7 +8,7 @@ contract VouchedOracles {
 
     mapping(address => bool) public vouchedOracles;
     mapping(address => uint) public vouchedOracleIndex;
-    mapping(bytes => address[]) public vouchedOraclesByWhat;
+    mapping(bytes => Oracle[]) public vouchedOraclesByWhat;
 
     uint256 votingPeriodInBlocks;
 
@@ -69,7 +69,7 @@ contract VouchedOracles {
                 return;
             }
 
-            vouchedOraclesByWhat[oracle.what()].push(oracleAddr);
+            vouchedOraclesByWhat[oracle.what()].push(oracle);
             vouchedOracles[oracleAddr] = true;
             vouchedOracleIndex[oracleAddr] = vouchedOraclesByWhat[oracle.what()].length;
         } else if (votes[oracleAddr] < 0) {

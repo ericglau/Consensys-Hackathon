@@ -4,4 +4,5 @@ interface Oracle {
     function value() external returns (string memory);
     function lastUpdatedBlock() external returns (uint);
     function what() external returns (bytes memory);
+    function update() external payable;
 }
