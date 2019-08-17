@@ -39,16 +39,20 @@ contract OracleSet {
         }
         
         address[] memory result = new address[](size);
-        uint[] memory usedIndices = new uint[](size);
+        int[] memory usedIndices = new int[](size);
+        // init array elements to -1
         for (uint i = 0; i<size; i++) {
-            uint oracleIndex = random();
-            while (contains(usedIndices, oracleIndex)) {
+            usedIndices[i] = -1;
+        }
+        
+        for (uint i = 0; i<size; i++) {
+            uint oracleIndex;
+            do {
                 oracleIndex = random();
-            }
-            usedIndices[i] = oracleIndex;
+            } while(contains(usedIndices, int(oracleIndex)));
+            usedIndices[i] = int(oracleIndex);
             result[i] = oracles[oracleIndex];
         }
-        index = (index + 1) % oracles.length;
         return result;
     }
  
@@ -60,7 +64,7 @@ contract OracleSet {
     }
     
     // check if array contains the number
-    function contains(uint[] memory array, uint number) internal pure returns (bool) {
+    function contains(int[] memory array, int number) internal pure returns (bool) {
         for (uint i = 0; i<array.length; i++) {
             if (array[i] == number) {
                 return true;
