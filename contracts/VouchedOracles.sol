@@ -23,6 +23,11 @@ contract VouchedOracles {
         require(oraclesBeingEvaluated[oracleAddr] > 0, "oracle must be in the evaluating stage");
         _;
     }
+    
+    modifier isNotBeingEvaluated(address oracleAddr) {
+        require(oraclesBeingEvaluated[oracleAddr] == 0, "oracle must not be in the evaluating stage");
+        _;
+    }
 
     modifier isNotAlreadyVoting(address oracleAddr, address voter) {
         require(!voters[oracleAddr][voter], "voter has already voted");
@@ -41,7 +46,9 @@ contract VouchedOracles {
         _;
     }
 
-    function evaluateOracle(address oracleAddr) public {
+    function evaluateOracle(address oracleAddr) external
+        isNotBeingEvaluated(oracleAddr)
+    {
         oraclesBeingEvaluated[oracleAddr] = block.number + votingPeriodInBlocks;
         voters[oracleAddr][msg.sender] = true;
         votersArray[oracleAddr].push(msg.sender);
@@ -157,7 +164,7 @@ contract VouchedOracles {
     }
  
     // pseudo random number generator
-    function random() public returns (uint) {
+    function random() internal returns (uint) {
         uint randomNumber = uint(keccak256(abi.encodePacked(now, msg.sender, nonce))) % oracles.length;
         nonce++;
         return randomNumber;
@@ -172,14 +179,5 @@ contract VouchedOracles {
         }
         return false;
     }
-    
-    // check if array contains the address
-    function contains(address[] memory array, address addr) internal pure returns (bool) {
-        for (uint i = 0; i<array.length; i++) {
-            if (array[i] == addr) {
-                return true;
-            }
-        }
-        return false;
-    }
+
 }
