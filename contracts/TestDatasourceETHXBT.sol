@@ -8,12 +8,13 @@ contract TestDatasourceETHXBT {
     event OnUpdate();
 
     constructor(bytes memory _what) public payable {
-      require(_what.length > 0, "what must not be empty");
-      what = _what;
+        require(_what.length > 0, "what must not be empty");
+        what = _what;
     }
 
     function setValue(string memory _value) public {
-      value = _value;
+        value = _value;
+        lastUpdatedBlock = block.number;
     }
 
     function update() public payable {
