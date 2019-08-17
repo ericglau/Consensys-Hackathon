@@ -8,6 +8,7 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "provable-eth-api": "git+https://github.com/provable-things/ethereum-api.git",
     "@typescript-eslint/eslint-plugin": "^2.0.0",
     "@typescript-eslint/parser": "^2.0.0",
     "eslint": "^5.16.0",
