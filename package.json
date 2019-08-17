@@ -1,0 +1,25 @@
+{
+  "name": "Consensys-Hackathon",
+  "version": "1.0.0",
+  "description": "## Building",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adityas129/Consensys-Hackathon.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adityas129/Consensys-Hackathon/issues"
+  },
+  "homepage": "https://github.com/adityas129/Consensys-Hackathon#readme"
+}
