@@ -5,6 +5,7 @@ contract VouchedOracles {
     
     mapping(address => uint256) public oraclesBeingEvaluated;
     mapping(address => mapping(address => bool)) public voters;
+    mapping(address => address[]) public votersArray;
     mapping(address => int) public votes;
 
     mapping(address => bool) public vouchedOracles;
@@ -43,6 +44,7 @@ contract VouchedOracles {
     function evaluateOracle(address oracleAddr) public {
         oraclesBeingEvaluated[oracleAddr] = block.number + votingPeriodInBlocks;
         voters[oracleAddr][msg.sender] = true;
+        votersArray[oracleAddr].push(msg.sender);
         votes[oracleAddr] = 1;
     }
 
@@ -51,6 +53,7 @@ contract VouchedOracles {
         isNotAlreadyVoting(oracleAddr, msg.sender)
     {
         voters[oracleAddr][msg.sender] = true;
+        votersArray[oracleAddr].push(msg.sender);
         votes[oracleAddr] += 1;
     }
 
@@ -59,6 +62,7 @@ contract VouchedOracles {
         isNotAlreadyVoting(oracleAddr, msg.sender)
     {
         voters[oracleAddr][msg.sender] = true;
+        votersArray[oracleAddr].push(msg.sender);
         votes[oracleAddr] -= 1;
     }
 
@@ -86,11 +90,17 @@ contract VouchedOracles {
             vouchedOracleIndex[oracleAddr] = 0;
             removeOracle(oracleAddr);
         }
+        clearVotes(oracleAddr);
     }
     
     
     
-    
+    function clearVotes(address oracleAddr) internal {
+        address[] memory votersArrayForOracle = votersArray[oracleAddr];
+        for (uint i=0; i<votersArrayForOracle.length; i++) {
+            voters[oracleAddr][votersArrayForOracle[i]] = false;
+        }
+    }
     
     address[] oracles;
     uint nonce;
