@@ -5,7 +5,7 @@ contract VouchedOracles {
     
     mapping(address => uint256) public oraclesBeingEvaluated;
     mapping(address => mapping(address => bool)) public voters;
-    mapping(address => uint) public votes;
+    mapping(address => int) public votes;
 
     mapping(address => bool) public vouchedOracles;
     mapping(address => uint) public vouchedOracleIndex;
