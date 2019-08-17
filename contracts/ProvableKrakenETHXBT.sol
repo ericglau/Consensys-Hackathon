@@ -6,10 +6,13 @@ contract ProvableKrakenETHXBT is usingProvable {
 
     string public value;
     uint public lastUpdatedBlock;
-    string public what;
+    bytes public what;
 
-    constructor(address oracleAddress) public payable {
+    constructor(address oracleAddress, bytes memory _what) public payable {
+        require(oracleAddress != address(0), "oracle address must not be 0");
+        require(_what.length > 0, "what must not be empty");
         OAR = OracleAddrResolverI(oracleAddress);
+        what = _what;
         update();
     }
 
