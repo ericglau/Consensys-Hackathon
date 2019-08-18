@@ -1,8 +1,8 @@
-Java web3 server for spinning up 10 oracles for XBTUSD, and constantly updates their values every (given number of) seconds.
+Java web3 server for spinning up <num_oracles> oracles for XBTUSD, and constantly updates their values every (given number of) seconds.
 
-- 5 are consistent
-- 3 are somewhat consistent
-- 2 are bad
+- 50% are consistent
+- 30% are somewhat consistent
+- 20% are bad
 
 ##### Requirements:
 Java 1.8
