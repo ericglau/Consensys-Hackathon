@@ -88,7 +88,7 @@ contract VouchedOracles {
             if (!vouchedOracles[oracleAddr]) {
                 return;
             }
-            vouchedOracles[oracleAddr] = false;
+            vouchedOracles[oracleAddr];
             uint index = vouchedOracleIndex[oracleAddr] - 1;
             uint length = vouchedOraclesByWhat[oracle.what()].length;
             vouchedOraclesByWhat[oracle.what()][index] = vouchedOraclesByWhat[oracle.what()][length-1];
@@ -103,7 +103,7 @@ contract VouchedOracles {
     function clearVotes(address oracleAddr) internal {
         address[] memory votersArrayForOracle = votersArray[oracleAddr];
         for (uint i=0; i<votersArrayForOracle.length; i++) {
-            voters[oracleAddr][votersArrayForOracle[i]] = false;
+            delete voters[oracleAddr][votersArrayForOracle[i]];
         }
     }
     
