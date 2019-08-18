@@ -1,4 +1,4 @@
-Java web3 server for spinning up <num_oracles> oracles for XBTUSD, and constantly updates their values every (given number of) seconds.
+Java web3 server for spinning up `<num_oracles>` oracles for XBTUSD, and constantly updates their values every `<update_wait_millis>` seconds.
 
 - 50% are consistent
 - 30% are somewhat consistent
