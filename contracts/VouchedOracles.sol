@@ -84,7 +84,6 @@ contract VouchedOracles {
             vouchedOraclesByWhat[oracle.what()].push(oracle);
             vouchedOracles[oracleAddr] = true;
             vouchedOracleIndex[oracleAddr] = vouchedOraclesByWhat[oracle.what()].length;
-            addOracle(oracleAddr);
         } else if (votes[oracleAddr] < 0) {
             if (!vouchedOracles[oracleAddr]) {
                 return;
@@ -95,7 +94,6 @@ contract VouchedOracles {
             vouchedOraclesByWhat[oracle.what()][index] = vouchedOraclesByWhat[oracle.what()][length-1];
             vouchedOraclesByWhat[oracle.what()].length--;
             vouchedOracleIndex[oracleAddr] = 0;
-            removeOracle(oracleAddr);
         }
         clearVotes(oracleAddr);
     }
@@ -109,43 +107,16 @@ contract VouchedOracles {
         }
     }
     
-    address[] oracles;
     uint nonce;
     
-    function addOracle(address oracleAddr) internal {
-        oracles.push(oracleAddr);
-    }
-    
-    function removeOracle(address oracleAddr) internal {
-        for (uint i=0; i<oracles.length; i++) {
-            if (oracles[i] == oracleAddr) {
-                removeOracleFromIndex(i);
-                break;
-            }
-        }
-    }
-
-    function removeOracleFromIndex(uint index) internal {
-        if (index < oracles.length) {
-            for (uint i=index; i<oracles.length-1; i++){
-                oracles[i] = oracles[i+1];
-            }
-            oracles.length--;
-        }
-    }
-
-    // get the array of all oracles
-    function getAllOracles() public view returns (address[] memory) {
-       return oracles;
-    }
-    
     // get an array of oracles of given size, randomly
-    function getRandomOracles(uint size) public returns (address[] memory) {
+    function getRandomOracles(bytes memory what, uint size) public returns (Oracle[] memory) {
+        Oracle[] memory oracles = vouchedOraclesByWhat[what];
         if (size >= oracles.length) {
             return oracles;
         }
         
-        address[] memory result = new address[](size);
+        Oracle[] memory result = new Oracle[](size);
         int[] memory usedIndices = new int[](size);
         // init array elements to -1
         for (uint i = 0; i<size; i++) {
@@ -155,7 +126,7 @@ contract VouchedOracles {
         for (uint i = 0; i<size; i++) {
             uint oracleIndex;
             do {
-                oracleIndex = random();
+                oracleIndex = random(oracles.length);
             } while(contains(usedIndices, int(oracleIndex)));
             usedIndices[i] = int(oracleIndex);
             result[i] = oracles[oracleIndex];
@@ -164,8 +135,8 @@ contract VouchedOracles {
     }
  
     // pseudo random number generator
-    function random() internal returns (uint) {
-        uint randomNumber = uint(keccak256(abi.encodePacked(now, msg.sender, nonce))) % oracles.length;
+    function random(uint range) internal returns (uint) {
+        uint randomNumber = uint(keccak256(abi.encodePacked(now, msg.sender, nonce))) % range;
         nonce++;
         return randomNumber;
     }
