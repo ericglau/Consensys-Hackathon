@@ -6,5 +6,6 @@ module.exports = function(deployer) {
   deployer.deploy(
     ProvableKrakenETHXBT,
     process.env.OraclizeAddrResolverI_Address,
+    Buffer.from('ETHXBT'),
   );
 };
