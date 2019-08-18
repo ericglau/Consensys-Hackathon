@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-const ProvableKrakenETHXBT = artifacts.require('ProvableKrakenETHXBT');
-const TestDatasourceETHXBT = artifacts.require('TestDatasourceETHXBT');
+const ProvableKrakenXBTUSD = artifacts.require('ProvableKrakenXBTUSD');
+const TestDatasource = artifacts.require('TestDatasource');
 
-module.exports = function(deployer) {
+module.exports = function (deployer) {
   deployer.deploy(
-    ProvableKrakenETHXBT,
+    ProvableKrakenXBTUSD,
     process.env.OraclizeAddrResolverI_Address,
-    Buffer.from('ETHXBT'),
+    Buffer.from('XBTUSD'),
   );
-  deployer.deploy(TestDatasourceETHXBT, Buffer.from('ETHXBT'));
+  deployer.deploy(TestDatasource, Buffer.from('XBTUSD'));
 };
