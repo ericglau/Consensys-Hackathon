@@ -32,7 +32,7 @@
   "scripts": {
     "generate": "ts-generator ts-generator.json",
     "build": "truffle compile && npm run generate",
-    "migrate": "truffle migrate",
+    "migrate": "truffle migrate > migrations.txt",
     "deploy": "npm run build && npm run migrate",
     "lint": "eslint {migrations/**/*.js,migrations/**/*.ts,test/**/*.js,migrations/**/*.ts}",
     "test": "truffle test"
