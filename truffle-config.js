@@ -26,6 +26,8 @@
 
 require('dotenv').config();
 
+const path = require('path');
+
 module.exports = {
   /**
    * Networks define how you connect to your ethereum client and let you set the
@@ -36,6 +38,8 @@ module.exports = {
    *
    * $ truffle test --network <network-name>
    */
+  // eslint-disable-next-line @typescript-eslint/camelcase
+  contracts_build_directory: path.join(__dirname, 'frontend/src/contracts'),
 
   networks: {
     // Useful for testing. The `development` name is special - truffle uses it by default
