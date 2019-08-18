@@ -4,10 +4,13 @@ Java web3 server for spinning up 10 oracles for XBTUSD, and constantly updates t
 - 3 are somewhat consistent
 - 2 are bad
 
-Build:
+##### Requirements:
+Java 1.8
+
+##### Build:
 `mvn clean install`
 
-Run:
+##### Run:
 `java -jar target/web3server-1.0-SNAPSHOT-jar-with-dependencies.jar <update_wait_millis> <private_key>`
 
 e.g.
