@@ -89,8 +89,7 @@ contract VouchedOracles {
             if (!vouchedOracles[oracleAddr]) {
                 return;
             }
-            vouchedOracles[oracleAddr] 
-            ;
+            vouchedOracles[oracleAddr];
             uint index = vouchedOracleIndex[oracleAddr] - 1;
             uint length = vouchedOraclesByWhat[oracle.what()].length;
             vouchedOraclesByWhat[oracle.what()][index] = vouchedOraclesByWhat[oracle.what()][length-1];
