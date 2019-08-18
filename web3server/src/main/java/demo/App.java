@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.web3j.crypto.Credentials;
 import org.web3j.crypto.WalletUtils;
 import org.web3j.protocol.Web3j;
@@ -56,9 +57,15 @@ public class App
         
             oracles.add(contract);
             System.out.println("started oracle " + contract.getContractAddress());
-
-
         }
+
+        // dump contract addresses to file
+        StringBuilder sb = new StringBuilder();
+        for (int i=0; i<10; i++) {
+            sb.append(oracles.get(i).getContractAddress()).append(",");
+        }
+        FileUtils.write(new File("contracts.csv"), sb.toString());
+
 
         int loopNumber = 0;
         while(true) {
